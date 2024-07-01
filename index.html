@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Currency Convertor</h2>
+    <form action="" name="form">
+        <input type="number" name="amount">
+        from:
+        <select name="from" id="">
+            <option value="INR">INR</option>
+            <option value="USD">USD</option>
+            <option value="AED">AED</option>
+        </select>
+        To:
+        <select name="to" id="">
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="AED">AED</option>
+        </select>
+
+        <button type="button" onclick="convertor()">Convert</button>
+        <h1 id="result">Result</h1>
+    </form>
+
+    <script>
+        function convertor(){
+
+            console.log(document.form.from.value)
+            let from_data= document.form.from.value
+        let amount = document.form.amount.value
+
+        fetch(`https://api.exchangerate-api.com/v4/latest/${from_data}`)
+        .then(response=>response.json())
+        .then(data=>{
+
+            let to_data = document.form.to.value
+            let rate = data.rates[to_data]
+            let new_amount = (rate*amount).toFixed(2)
+            
+            document.getElementById('result').innerHTML=new_amount
+        })
+    }
+    </script>
+</body>
+</html>
